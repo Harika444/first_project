@@ -1,0 +1,24 @@
+Jenkins jira  integration
+
+->install jira
+->install jenkins
+->In jira's administration console, go to settings choose Manage apps
+->In the search the Marketplace box enter jenkins integration, install add-on
+
+Installing the jenkins add-on
+
+https://docs.marvelution.org/jji/cloud/release-notes/jenkins
+-> Download the add-on from the above link 
+->In jenkins, navigate to manage jenkins choose manage plugins
+->click the advanced tab and upload Plugin, Upload the plugin file
+
+Add your first jenkins site
+
+->In settings icon, Applications, choose Jenkins integration > configuration and click on Add Site button
+-> click on site name to check jobs. 
+
+-> install jira-trigger plugin
+-> In job configuration -> Build Triggers -> Build when an issue is updated in JIRA
+->  Build -> Execute windows batch command
+command echo somethinng
+   -> In Post-build Action -> Jira Issue Results Updater

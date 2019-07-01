@@ -1,0 +1,5 @@
+installing hyper v
+-> https://github.com/theJasonHelmick/PS-AutoLab-Env
+->cd \
+->dir
+->cd-> cd .\AutoLab\ -> cd configurations -> cd windows10 -> Unattend-Lab

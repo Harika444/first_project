@@ -1,0 +1,149 @@
+vagrant 
+->create a directory
+
+#to install Ubuntu Server 14.04.
+->vagrant box add ubuntu/trusty64
+vagrant box add --insecure ubuntu/trusty64
+
+
+#initialize the new vagrant
+->vagrant init ubuntu/trusty
+#get Ubuntu up and running
+vagrant up
+
+->vagrant halt
+->vagrant plugin install vagrant-vbguest
+->vagrant reload
+
+--------
+copying files from local to vmm
+cp /vagrant/pemfile .
+
+#Run  vagrant ssh to securely enter the Ubuntu virtual machine.
+vagrant ssh
+
+
+
+-------------------------------
+driver problem
+
+Add extension in virtual box
+File -> preferences -> Extensions ===add
+
+---------------------------------------
+
+VBoxManage error
+
+give path of VBoxManage in enviornment variables
+
+------------------
+jdk 1.8
+
+===wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.tar.gz" 
+ 
+
+=== tar xvf jdk-8u201-linux-x64.tar.gz
+
+SET JAVA PATH
+
+installed 
+==pwd
+copy path 
+
+==  sudo vi /etc/environment
+
+
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/vagrant/jdk1.8.0_201/bin"
+
+export JAVA_HOME=/home/vagrant/jdk1.8.0_201
+
+
+=== source /etc/environment
+
+===echo $JAVA_HOME
+------------------
+
+tomcat
+sudo wget https://www.apache.org/dist/tomcat/tomcat-8/v8.5.39/bin/apache-tomcat-8.5.39.zip
+  <role rolename="manager-gui"/>
+  <role rolename="manager-script"/>
+  <user username="tomcat" password="tomcat" roles="tomcat"/>
+  <user username="manager" password="tomcat" roles="tomcat,manager-gui"/>
+  <user username="jenkins" password="jenkins" roles="manager-script"/> 
+
+403 err0r in tomcat
+
+apache-tomcat-8.5.39/conf/Catalina/localhost
+
+===create manager.xml
+vi manager.xml
+
+<Context privileged="true" antiResourceLocking="false"
+ docBase="${catalina.home}/webapps/manager">
+       <Valve className="org.apache.catalina.valves.RemoteAddrValve" allow="^.*$" />
+</Context>
+
+
+<Context antiResourceLocking="false" privileged="true" >
+<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> 
+
+  <Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
+</Context>
+
+--------------------
+<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> 
+
+------------------------
+static ip in virtual box
+ ===before editing 
+
+
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# Source interfaces
+# Please check /etc/network/interfaces.d before changing this file
+# as interfaces may have been defined in /etc/network/interfaces.d
+# NOTE: the primary ethernet device is defined in
+# /etc/network/interfaces.d/eth0
+# See LP: #1262951
+source /etc/network/interfaces.d/*.cfg
+
+=======
+
+virtual box tomcat running in browser
+
+ config.vm.network :forwarded_port, guest: 8080, host: 10000
+
+-----------------------------------------
+jira
+
+====https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.1.0.zip
+
+Edit <installation-directory>\atlassian-jira\WEB-INF\classes\jira-application.properties file in any text editor.
+
+After jira.home add the absolute path to your home directory (not a symlink), for example:
+
+jira.home=/var/jirasoftware-home
+
+AAABjA0ODAoPeNp9kltPwkAQhd/7KzbxRR/atFzkkjQR243BlEIoiia+jGWAVWib2S3Kv7c3A0rhcbN75nznzF7NccEGCTHLZGan3270213muDPWMK2etiLEaB0nCZLhiRAjiXwhlIgjm/szPp1MhwHX/HT7jjRePkkkaeuW5sSRglD5sEV7DSQ+odcx4G61BbExwnirfQgC40Q2SSlcg0QXFNq5v262dMvUKufZPsFipDMejfjUGQ683yv+nQjaH+naua7C4KPMtp4jQNohDV37vnX/oL/MzZneeRyZuteevJaQCcWLNFRGftBlvFRfQGhkU8UObUUpXnqWAYGDkUIqnwbpuwxJJEWBB/H5Zmv6r2shC5iZRBCFZ5q4wHiyhconK8UbugH3dc9qthrNTve2HHMSivt2zbN6t0AB5colbCRqY1pBJCQUsWsX5BAWt/+/xKaEfM6Yc23jT1MFXEJCVhty8dD6Y4bDggqHXedhWJnm5q3P+A42aWFYhjjZ84UlHBMc6w4zy/MPWnMvnTAsAhQ+ecf5CxcOgEt2tTsw/zhjzhikjQIUM7uvq/CadkOnsWlV3PX60g02oA0=X02j7
+
+------------------------------------
+
+jenkins
+ allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1
+
+
+git path
+cmd--git --exec-path 
+
+
+
+C:/Users/aharika/AppData/Local/Programs/Git/mingw64/libexec/git-core
+

@@ -1,0 +1,188 @@
+1. java installation:
+-> wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "https://download.oracle.com/otn-pub/java/jdk/8u201-b09/42970487e3af4f5aa5bca3f542482c60/jdk-8u201-linux-x64.tar.gz"
+-> tar xzf jdk-8u171-linux-x64.tar.gz
+
+
+or
+
+-> yum install java-1.8.0
+
+********to change permission of a directory--- chmod -R 777 <dirname> ********
+
+2. maven installation:
+-> sudo wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo
+-> sudo sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
+-> sudo yum install -y apache-maven
+-> mvn --version
+-> sudo update-alternatives --config java
+
+		(or)
+
+-->cd /opt
+-->sudo wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.zip
+-->unzip apache-maven-3.6.0-bin.zip
+-->set M2_HOME in either /etc/environment or .bash_profile
+-->set PATH
+-->mvn --version
+
+3. remove old java and install new version :
+--> sudo yum install java-1.8.0 -y
+--> sudo yum remove java-1.7.0-openjdk -y
+
+4. jenkins installation:
+--> wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins.io/redhat-stable/jenkins.repo
+--> rpm --import http://pkg.jenkins.io/redhat-stable/jenkins.io.key
+--> sudo yum install jenkins
+
+on ubuntu:
+wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+sudo apt-get install jenkins 
+ 
+
+
+5. sudo yum install git
+
+6. sonarqube installation:
+--> https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-6.7.6.zip
+--> sudo unzip sonarqube-6.4.zip -d /opt
+--> sudo mv /opt/sonarqube-6.4 /opt/sonarqube
+
+cd sonarqube/bin/linux-8x-64
+--> sudo ./sonar.sh start/status
+
+SonarScanner:
+
+--> https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip
+--> unzip sonar-scanner-cli-3.3.0.1492-linux.zip
+--> vi /conf/sonar.properties
+	sonar.host.url=http://<sonar-server>:port
+# Required metadata
+sonar.projectKey=demo
+sonar.projectName=SampleDemo
+sonar.projectVersion=1.0
+
+# Comma-separated paths to directories with sources (required)
+sonar.sources=src/
+sonar.java.binaries=target/classes/edu/knoldus/model/
+
+sonar.jacoco.reportPaths=target/jacoco-ut
+# Encoding of the source files
+sonar.sourceEncoding=UTF-8  
+ 
+
+
+7. tomcat installation: 
+
+--> * https://www.digitalocean.com/community/tutorials/how-to-install-apache-tomcat-7-on-centos-7-via-yum
+>>> wget http://www-us.apache.org/dist/tomcat/tomcat-8/v8.0.53/bin/apache-tomcat-7.0.92.tar.gz
+>>> sudo tar -zxvf apache-tomcat-8.0.53.tar.gz 
+
+-> wget http://redrockdigimark.com/apachemirror/tomcat/tomcat-8/v8.5.31/bin/apache-tomcat-8.5.31.tar.gz
+-> tar -xvzf apache-tomcat-8.5.31.tar.gz -C /opt
+-> mv /opt/apache-tomcat-8.5.31/ /opt/tomcat
+->  vim /opt/tomcat/conf/tomcat-users.xml
+	
+tomcat version -> java -cp lib/catalina.jar org.apache.catalina.util.ServerInfo
+
+	
+			(or)
+--> sudo wget https://www.apache.org/dist/tomcat/tomcat-8/v8.5.39/bin/apache-tomcat-8.5.39.zip
+--> unzip apache-tomcat-8.5.39.zip
+
+
+
+  <role rolename="tomcat"/>
+  <role rolename="manager-gui"/>
+  <role rolename="manager-script"/>
+  <user username="tomcat" password="tomcat" roles="tomcat"/>
+  <user username="manager" password="tomcat" roles="tomcat,manager-gui"/>
+  <user username="jenkins" password="jenkins" roles="manager-script"/> 
+ 
+
+
+-> cd /opt/tomcat/bin
+-> sh startup.sh
+
+8. nexus installation: https://devopscube.com/how-to-install-latest-sonatype-nexus-3-on-linux/
+--> https://www.intertech.com/Blog/lightning-tutorial-install-nexus/
+--> http://www.sonatype.org/downloads/nexus-latest-bundle.tar.gz
+
+9. test case with maven : https://www.safaribooksonline.com/library/view/jenkins-the-definitive/9781449311155/ch06s03.html
+**/target/surefire-reports/*.xml
+
+10. docker installation and working:
+*** https://www.liquidweb.com/kb/how-to-install-docker-on-centos-6/
+> yum install docker
+> service docker start
+> docker images
+> docker ps (to see the running containers)
+> docker ps -a (to see all the containers)
+> vi Dockerfile (Dockerfile naming shud not changed)
+> docker build -t <name> . (to build d dockerfile)
+> docker login
+> docker push <name>
+> docker run --name <name> -d -p 8080:8080 <name> (to run d container)
+> docker exec -it <name> /bin/bash (to get inside d container)
+
+11. Jenkins pipeline:
+>>> https://jenkins.io/doc/pipeline/examples/
+
+12. cloud formation script and azure vm: 
+>>> https://cloudacademy.com/blog/writing-your-first-cloudformation-template/
+
+13. email notification:
+>>> https://www.360logica.com/blog/email-notification-in-jenkins/
+
+14. ELK stack: tutorial- https://www.edureka.co/blog/elk-stack-tutorial/
+
+grok tutorial- https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html
+
+grok patterns- https://github.com/logstash-plugins/logstash-patterns-core/blob/master/patterns/grok-patterns
+
+>>>metricbeats: https://www.elastic.co/guide/en/beats/metricbeat/6.2/view-kibana-dashboards.html ( echo "DAC" >> /tmp/logstash.txt ) 
+
+>>>ELK: https://logz.io/learn/complete-guide-elk-stack/#elasticsearch
+
+heartbeat setup -e \
+  -E output.logstash.enabled=false \
+  -E output.elasticsearch.hosts=['54.218.127.207:9200'] \
+  -E setup.kibana.host=54.218.127.207:5601
+
+curl -XGET 'http://18.224.67.13:9200/metricbeat-*/_search?pretty'
+heartbeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["54.218.127.207:9200"]'
+
+filebeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["54.218.127.207:9200"]'
+
+heartbeat setup --template -E output.logstash.enabled=false -E 'output.elasticsearch.hosts=["54.218.127.207:9200"]'
+
+
+curl -XPUT -H 'Content-Type: application/json' http://54.218.127.207:9200/_template/metricbeat-6.4.0 -d@metricbeat.template.json
+
+
+file {
+
+path => "/var/log/*.log"
+
+start_position => "beginning"
+
+sincedb_path => "/dev/null"
+
+
+-->
+how to find git path:
+git --exec-path
+
+
+-------------------------
+web-hooks
+-------------------------
+
+->install github integration plugin
+->in github setting of project add webhook
+->github is public so to  Expose a web server on port 8080 of your local machine to the internet
+->https://ngrok.com/download
+->download ngrok and in ngrok.exe use the command (ngrok.exe http 8080) 
+-> use that public url in payload url and also in configure-> github server use that url ex-http://aeff431d.ngrok.io/github-webhook/
+->configure->pull request->project clone url
